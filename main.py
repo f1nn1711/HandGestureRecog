@@ -5,6 +5,12 @@ import cv2
 import mediapipe
 import json
 
+#WIP
+def recogniseGesture(landmarkPoints: str) -> str:
+    splitLMs = landmarkPoints.split('landmark')[1:]
+    formattedLMs = [dict(s.strip()) for s in splitLMs]
+    pass
+
 with open('config.txt', 'r') as f:
     configOpts = json.load(f)
 
@@ -27,8 +33,9 @@ while capture.isOpened():
     detectionResults = handsDetection.process(img)
 
     if detectionResults.multi_hand_landmarks:
-        for landmark in detectionResults.multi_hand_landmarks:
-            mediapipeDraw.draw_landmarks(img, landmark, mediapipe.solutions.hands.HAND_CONNECTIONS)
+        for landmarks in detectionResults.multi_hand_landmarks:
+            recogniseGesture(str(landmarks))
+            mediapipeDraw.draw_landmarks(img, landmarks, mediapipe.solutions.hands.HAND_CONNECTIONS)
 
     cv2.imshow('window', img)
 
