@@ -1,4 +1,5 @@
 {
     "greyscale": false,
-    "flip": true
+    "flip": true,
+    "rgb": true
 }
