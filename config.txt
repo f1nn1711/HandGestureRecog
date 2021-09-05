@@ -1,0 +1,4 @@
+{
+    "greyscale": false,
+    "flip": true
+}
