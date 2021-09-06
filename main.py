@@ -9,7 +9,7 @@ if configOpts['install_dependancies']:
     os.system('pip3 install -r requirements.txt')
 
 import cv2
-import mediapipe
+import mediapipe  # https://google.github.io/mediapipe/solutions/hands.html
 import gestureRecog
 
 capture = cv2.VideoCapture(0)
@@ -33,7 +33,7 @@ while capture.isOpened():
 
     if detectionResults.multi_hand_landmarks:
         for landmarks in detectionResults.multi_hand_landmarks:
-            gesRecog.formatLandmarks(landmarks)
+            gesRecog.getHandStatus(gesRecog.formatLandmarks(landmarks))
             mediapipeDraw.draw_landmarks(img, landmarks, mediapipe.solutions.hands.HAND_CONNECTIONS)
 
     cv2.imshow('window', img)
