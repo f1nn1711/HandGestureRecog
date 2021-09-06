@@ -1,18 +1,16 @@
-#pip install -r requirements.txt
-#or
-#pip3 install -r requirements.txt
-import cv2
-import mediapipe
 import json
-
-#WIP
-def recogniseGesture(landmarkPoints: str) -> str:
-    splitLMs = landmarkPoints.split('landmark')[1:]
-    formattedLMs = [dict(s.strip()) for s in splitLMs]
-    pass
+import os
 
 with open('config.txt', 'r') as f:
     configOpts = json.load(f)
+
+if configOpts['install_dependancies']:
+    # If command isn't found, uses 'pip' instead of 'pip3'
+    os.system('pip3 install -r requirements.txt')
+
+import cv2
+import mediapipe
+import gestureRecog
 
 capture = cv2.VideoCapture(0)
 
@@ -34,7 +32,6 @@ while capture.isOpened():
 
     if detectionResults.multi_hand_landmarks:
         for landmarks in detectionResults.multi_hand_landmarks:
-            recogniseGesture(str(landmarks))
             mediapipeDraw.draw_landmarks(img, landmarks, mediapipe.solutions.hands.HAND_CONNECTIONS)
 
     cv2.imshow('window', img)

@@ -1,5 +1,6 @@
 {
     "greyscale": false,
     "flip": true,
-    "rgb": true
+    "rgb": true,
+    "install_dependancies": true
 }
