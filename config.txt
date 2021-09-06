@@ -2,5 +2,5 @@
     "greyscale": false,
     "flip": true,
     "rgb": true,
-    "install_dependancies": true
+    "install_dependancies": false
 }

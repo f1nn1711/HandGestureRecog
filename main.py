@@ -16,6 +16,7 @@ capture = cv2.VideoCapture(0)
 
 handsDetection = mediapipe.solutions.hands.Hands()
 mediapipeDraw = mediapipe.solutions.drawing_utils
+gesRecog = gestureRecog.GestureRecognition()
 
 while capture.isOpened():
     ret, img = capture.read()
@@ -32,6 +33,7 @@ while capture.isOpened():
 
     if detectionResults.multi_hand_landmarks:
         for landmarks in detectionResults.multi_hand_landmarks:
+            gesRecog.formatLandmarks(landmarks)
             mediapipeDraw.draw_landmarks(img, landmarks, mediapipe.solutions.hands.HAND_CONNECTIONS)
 
     cv2.imshow('window', img)
