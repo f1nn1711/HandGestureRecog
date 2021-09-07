@@ -51,8 +51,10 @@ class GestureRecognition():
         )
 
         print(f'Index finger curve value: {curveValue}')
+        status = self.determineStatusFromCurve(curveValue)
+        print(status)
 
-        return self.determineStatusFromCurve(curveValue)
+        return status
 
     def getMiddleStatus(self, landmarks):
         curveValue = self.lineCurve(
@@ -94,11 +96,11 @@ class GestureRecognition():
         return cross
 
     def determineStatusFromCurve(self, curveValue: float) -> str:
-        if -0.0003 < curveValue < 0.0003:
+        if abs(curveValue) <= 0.0006:
             return 'straight'
-        elif -0.0007 < curveValue < 0.0007:
+        elif 0.0006 < abs(curveValue) < 0.008:
             return 'middle'
-        elif -0.001 < curveValue < 0.001:
+        elif abs(curveValue) > 0.008:
             return 'bent'
 
         '''

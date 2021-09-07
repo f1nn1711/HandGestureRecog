@@ -2,5 +2,14 @@
     "greyscale": false,
     "flip": true,
     "rgb": true,
-    "install_dependancies": false
+    "install_dependancies": false,
+    "calibrateThresholds": true,
+    "digitThresholds": {
+        "fingerBent": 0,
+        "fingerMiddle": 0,
+        "fingerStraight": 0,
+        "thumbBent": 0,
+        "thumbMiddle": 0,
+        "thumbStraight": 0,
+    }
 }
