@@ -96,12 +96,8 @@ class GestureRecognition():
     def determineStatusFromCurve(self, curveValue: float) -> str:
         if -0.0003 < curveValue < 0.0003:
             return 'straight'
-        elif -0.2 < curveValue < 0.2:
-            return 'littleBend'
-        elif -0.3 < curveValue < 0.3:
-            return 'middleBend'
-        elif -0.4 < curveValue < 0.4:
-            return 'largeBend'
+        elif -0.0007 < curveValue < 0.0007:
+            return 'middle'
         elif -0.001 < curveValue < 0.001:
             return 'bent'
 
