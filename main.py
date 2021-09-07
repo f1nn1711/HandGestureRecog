@@ -21,10 +21,16 @@ gesRecog = gestureRecog.GestureRecognition()
 
 hasCalibrated = False
 calibrating = False
-startTime = 0
-endTime = 0
+calibrationTime = 5
 calibratingStage = 0
 calibrationValues = []
+calibrationPointsKeys = list(configOpts['digitThresholds'].keys())
+
+def updateConfigFile(configOpts):
+    with open('config.txt', 'w') as f:
+        jsonConfigData = json.dumps(configOpts, indent=4)
+        f.write(jsonConfigData)
+        f.close()
 
 while capture.isOpened():
     ret, img = capture.read()
@@ -41,23 +47,35 @@ while capture.isOpened():
 
     if detectionResults.multi_hand_landmarks:
         for landmarks in detectionResults.multi_hand_landmarks:
-            if not hasCalibrated and configOpts['calibrateThresholds'] == 'true':
-                print('Starting validation')
-                print(f'Hold {configOpts["digitThresholds"][calibratingStage]} for 5 seconds')
+            formattedLandmarks = gesRecog.formatLandmarks(landmarks)
+
+            if not hasCalibrated and configOpts['calibrateThresholds'] and not calibrating:
+                print('Starting calibration')
+                print(f'Hold {calibrationPointsKeys[calibratingStage]} for {calibrationTime} second(s)')
                 calibrating = True
                 startTime = time.time()
 
             if calibrating:
-                if (time.time() - startTime) <= 5:
-                    pass
-                    #get the value from the class
-                    #add it to the array
-                
-                #add else for when it has been more than 5 seconds
-                #calculate avg of values, abs it, set it on the config
-                #update the stage
+                if (time.time() - startTime) <= calibrationTime:
+                    if calibratingStage <= 1:
+                        calibrationValues.append(gesRecog.getIndexStatus(formattedLandmarks, True)[0])
+                    elif calibratingStage <= 3:
+                        calibrationValues.append(gesRecog.getThumbStatus(formattedLandmarks, True)[0])
+                else:
+                    print('finished calibrating digit')
 
-            gesRecog.getHandStatus(gesRecog.formatLandmarks(landmarks))
+                    configOpts["digitThresholds"][calibrationPointsKeys[calibratingStage]] = sum(
+                        calibrationValues) / len(calibrationValues)
+                    calibrating = False
+
+                    calibratingStage += 1
+
+                    if calibratingStage == 4:
+                        updateConfigFile(configOpts)
+                        print('----------------------CALIBRATION DONE----------------------')
+                        hasCalibrated = True
+
+            gesRecog.getHandStatus(formattedLandmarks)
 
             mediapipeDraw.draw_landmarks(img, landmarks, mediapipe.solutions.hands.HAND_CONNECTIONS)
 

@@ -34,27 +34,33 @@ class GestureRecognition():
             "wristPosition": {}
         }
 
-    def getThumbStatus(self, landmarks):
+    def getThumbStatus(self, landmarks, returnValue=False):
         curveValue = self.lineCurve(
             landmarks[2],
             landmarks[3],
             landmarks[4]
         )
 
-        return self.determineStatusFromCurve(curveValue)
+        status = self.determineStatusFromCurve(curveValue)
 
-    def getIndexStatus(self, landmarks):
+        if not returnValue:
+            return status
+        else:
+            return [curveValue, status]
+
+    def getIndexStatus(self, landmarks, returnValue=False):
         curveValue = self.lineCurve(
             landmarks[5],
             landmarks[6],
             landmarks[8]
         )
 
-        print(f'Index finger curve value: {curveValue}')
         status = self.determineStatusFromCurve(curveValue)
-        print(status)
 
-        return status
+        if not returnValue:
+            return status
+        else:
+            return [curveValue, status]
 
     def getMiddleStatus(self, landmarks):
         curveValue = self.lineCurve(
@@ -98,8 +104,6 @@ class GestureRecognition():
     def determineStatusFromCurve(self, curveValue: float) -> str:
         if abs(curveValue) <= 0.0006:
             return 'straight'
-        elif 0.0006 < abs(curveValue) < 0.008:
-            return 'middle'
         elif abs(curveValue) > 0.008:
             return 'bent'
 

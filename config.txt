@@ -5,11 +5,9 @@
     "install_dependancies": false,
     "calibrateThresholds": true,
     "digitThresholds": {
-        "fingerBent": 0,
-        "fingerMiddle": 0,
-        "fingerStraight": 0,
-        "thumbBent": 0,
-        "thumbMiddle": 0,
-        "thumbStraight": 0,
+        "fingerBent": -0.002481427893715588,
+        "fingerStraight": -0.002627327778034858,
+        "thumbBent": -0.0017007691008678395,
+        "thumbStraight": -0.0013361702561208322
     }
 }
