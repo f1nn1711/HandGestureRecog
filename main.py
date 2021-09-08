@@ -4,7 +4,7 @@ import os
 with open('config.txt', 'r') as f:
     configOpts = json.load(f)
 
-if configOpts['install_dependancies']:
+if configOpts['installDependancies']:
     # If command isn't found, uses 'pip' instead of 'pip3'
     os.system('pip3 install -r requirements.txt')
 
@@ -21,16 +21,18 @@ gesRecog = gestureRecog.GestureRecognition()
 
 hasCalibrated = False
 calibrating = False
-calibrationTime = 5
+calibrationTime = configOpts['calibrationTime']
 calibratingStage = 0
 calibrationValues = []
 calibrationPointsKeys = list(configOpts['digitThresholds'].keys())
+
 
 def updateConfigFile(configOpts):
     with open('config.txt', 'w') as f:
         jsonConfigData = json.dumps(configOpts, indent=4)
         f.write(jsonConfigData)
         f.close()
+
 
 while capture.isOpened():
     ret, img = capture.read()
@@ -54,6 +56,9 @@ while capture.isOpened():
                 print(f'Hold {calibrationPointsKeys[calibratingStage]} for {calibrationTime} second(s)')
                 calibrating = True
                 startTime = time.time()
+            elif not configOpts['calibrateThresholds'] and not hasCalibrated:
+                hasCalibrated = True
+                gesRecog.setThresholds(configOpts['digitThresholds'])
 
             if calibrating:
                 if (time.time() - startTime) <= calibrationTime:
@@ -64,16 +69,18 @@ while capture.isOpened():
                 else:
                     print('finished calibrating digit')
 
-                    configOpts["digitThresholds"][calibrationPointsKeys[calibratingStage]] = sum(
+                    configOpts['digitThresholds'][calibrationPointsKeys[calibratingStage]] = sum(
                         calibrationValues) / len(calibrationValues)
                     calibrating = False
 
                     calibratingStage += 1
 
                     if calibratingStage == 4:
+                        configOpts['calibrateThresholds'] = False
                         updateConfigFile(configOpts)
                         print('----------------------CALIBRATION DONE----------------------')
                         hasCalibrated = True
+                        gesRecog.setThresholds(configOpts['digitThresholds'])
 
             gesRecog.getHandStatus(formattedLandmarks)
 

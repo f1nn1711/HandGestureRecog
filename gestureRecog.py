@@ -2,7 +2,14 @@ import json
 
 class GestureRecognition():
     def __init__(self):
-        pass
+        self.thresholds = {
+            "thumbThreshold": 0,
+            "fingerThreshold": 0
+        }
+
+    def setThresholds(self, thresholds) -> None:
+        self.thresholds['thumbThreshold'] = (thresholds['thumbBent']+thresholds['thumbStraight'])/2
+        self.thresholds['fingerThreshold'] = (thresholds['fingerBent'] + thresholds['fingerStraight']) / 2
 
     def formatLandmarks(self, landmarks) -> list:
         landmarks = str(landmarks)
@@ -101,13 +108,15 @@ class GestureRecognition():
 
         return cross
 
-    def determineStatusFromCurve(self, curveValue: float) -> str:
-        if abs(curveValue) <= 0.0006:
-            return 'straight'
-        elif abs(curveValue) > 0.008:
-            return 'bent'
-
-        '''
-        very bent is 0.001
-        straight is  0.0003
-        '''
+    def determineStatusFromCurve(self, curveValue: float, isThum = False) -> str:
+        #Lower = straighter
+        if isThum:
+            if curveValue <= self.thresholds['thumbThreshold']:
+                return 'straight'
+            else:
+                return 'bent'
+        else:
+            if curveValue <= self.thresholds['fingerThreshold']:
+                return 'straight'
+            else:
+                return 'bent'

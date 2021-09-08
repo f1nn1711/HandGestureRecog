@@ -2,8 +2,9 @@
     "greyscale": false,
     "flip": true,
     "rgb": true,
-    "install_dependancies": false,
-    "calibrateThresholds": true,
+    "installDependancies": false,
+    "calibrateThresholds": false,
+    "calibrationTime": 8,
     "digitThresholds": {
         "fingerBent": -0.002481427893715588,
         "fingerStraight": -0.002627327778034858,
