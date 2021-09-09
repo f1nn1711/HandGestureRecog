@@ -143,7 +143,7 @@ class GestureRecognition():
 
         for action in self.mapping:
             if currentTimestamp - action['lastTriggered'] < action['maxFrequency']:
-                return ''
+                continue
             
             for triggerPoint in action['points']:
                 if (

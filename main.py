@@ -86,7 +86,10 @@ while capture.isOpened():
             gesRecog.getHandStatus(formattedLandmarks)
             if (action := gesRecog.getAction()) != '':
                 print(action)
-                triggerKeys.triggerKeyboardEvent(action)
+                if action != 'quit':
+                    triggerKeys.triggerKeyboardEvent(action)
+                else:
+                    quit(0)
 
             mediapipeDraw.draw_landmarks(img, landmarks, mediapipe.solutions.hands.HAND_CONNECTIONS)
 

@@ -1,6 +1,6 @@
 [
     {
-        "command": "Com:cmd+n",
+        "command": "Com:cmd",
         "maxFrequency": 3,
         "points": {
             "indexFingerStatus": [
@@ -11,8 +11,8 @@
         }
     },
     {
-        "command": "Type:HelloWorld",
-        "maxFrequency": 3,
+        "command": "Type:My email is Finn H",
+        "maxFrequency": 10,
         "points": {
             "indexFingerStatus": [
                 "*",
@@ -28,6 +28,37 @@
                 "*",
                 "bent",
                 "bent"
+            ]
+        }
+    },
+    {
+        "command": "quit",
+        "maxFrequency": 10,
+        "points": {
+            "indexFingerStatus": [
+                "*",
+                "*",
+                "straight"
+            ],
+            "middleFingerStatus": [
+                "*",
+                "*",
+                "straight"
+            ],
+            "ringFingerStatus": [
+                "*",
+                "*",
+                "straight"
+            ],
+            "littleFingerStatus": [
+                "*",
+                "*",
+                "straight"
+            ],
+            "thumbStatus": [
+                "*",
+                "*",
+                "straight"
             ]
         }
     }
