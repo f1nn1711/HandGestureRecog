@@ -2,7 +2,7 @@
     "greyscale": false,
     "flip": true,
     "rgb": true,
-    "installDependancies": false,
+    "installDependencies": false,
     "calibrateThresholds": false,
     "calibrationTime": 8,
     "digitThresholds": {

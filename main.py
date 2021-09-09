@@ -4,7 +4,7 @@ import os
 with open('config.txt', 'r') as f:
     configOpts = json.load(f)
 
-if configOpts['installDependancies']:
+if configOpts['installDependencies']:
     # If command isn't found, uses 'pip' instead of 'pip3'
     os.system('pip3 install -r requirements.txt')
 
