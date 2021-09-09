@@ -1,4 +1,5 @@
 import json
+import time
 
 class GestureRecognition():
     def __init__(self):
@@ -11,6 +12,9 @@ class GestureRecognition():
 
         with open('mapping.json', 'r') as f:
             self.mapping = json.load(f)
+            
+        for n, _ in enumerate(self.mapping):
+            self.mapping[n]['lastTriggered'] = 0
 
     def setThresholds(self, thresholds) -> None:
         self.thresholds['thumbThreshold'] = (thresholds['thumbBent']+thresholds['thumbStraight'])/2
@@ -135,13 +139,19 @@ class GestureRecognition():
         if len(self.statusHistory) < 3:
             return ''
 
+        currentTimestamp = time.time()
+
         for action in self.mapping:
+            if currentTimestamp - action['lastTriggered'] < action['maxFrequency']:
+                return ''
+            
             for triggerPoint in action['points']:
                 if (
                     self.statusHistory[0][triggerPoint] == action['points'][triggerPoint][0] and
                     self.statusHistory[1][triggerPoint] == action['points'][triggerPoint][1] and
                     self.statusHistory[2][triggerPoint] == action['points'][triggerPoint][2]
                 ):
+                    action['lastTriggered'] = currentTimestamp
                     return action['command']
 
         return ''

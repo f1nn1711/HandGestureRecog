@@ -1,6 +1,7 @@
 [
     {
         "command": "cmd+n",
+        "maxFrequency": 3,
         "points": {
             "indexFingerStatus": [
                 "straight",
