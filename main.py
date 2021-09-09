@@ -83,6 +83,7 @@ while capture.isOpened():
                         gesRecog.setThresholds(configOpts['digitThresholds'])
 
             gesRecog.getHandStatus(formattedLandmarks)
+            print(gesRecog.getAction())
 
             mediapipeDraw.draw_landmarks(img, landmarks, mediapipe.solutions.hands.HAND_CONNECTIONS)
 

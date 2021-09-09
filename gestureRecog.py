@@ -7,6 +7,11 @@ class GestureRecognition():
             "fingerThreshold": 0
         }
 
+        self.statusHistory = []
+
+        with open('mapping.json', 'r') as f:
+            self.mapping = json.load(f)
+
     def setThresholds(self, thresholds) -> None:
         self.thresholds['thumbThreshold'] = (thresholds['thumbBent']+thresholds['thumbStraight'])/2
         self.thresholds['fingerThreshold'] = (thresholds['fingerBent'] + thresholds['fingerStraight']) / 2
@@ -40,6 +45,11 @@ class GestureRecognition():
             "littleFingerPosition": landmarks[20],
             "wristPosition": landmarks[0]
         }
+
+        self.statusHistory.append(handStatus)
+
+        if len(self.statusHistory) > 3:
+            self.statusHistory.pop(0)
 
     def getThumbStatus(self, landmarks, returnValue=False):
         curveValue = self.lineCurve(
@@ -120,3 +130,18 @@ class GestureRecognition():
                 return 'straight'
             else:
                 return 'bent'
+
+    def getAction(self) -> str:
+        if len(self.statusHistory) < 3:
+            return ''
+
+        for action in self.mapping:
+            for triggerPoint in action['points']:
+                if (
+                    self.statusHistory[0][triggerPoint] == action['points'][triggerPoint][0] and
+                    self.statusHistory[1][triggerPoint] == action['points'][triggerPoint][1] and
+                    self.statusHistory[2][triggerPoint] == action['points'][triggerPoint][2]
+                ):
+                    return action['command']
+
+        return ''
