@@ -1,7 +1,7 @@
 import json
 import os
 
-with open('config.txt', 'r') as f:
+with open('config.json', 'r') as f:
     configOpts = json.load(f)
 
 if configOpts['installDependencies']:
@@ -28,7 +28,7 @@ calibrationPointsKeys = list(configOpts['digitThresholds'].keys())
 
 
 def updateConfigFile(configOpts):
-    with open('config.txt', 'w') as f:
+    with open('config.json', 'w') as f:
         jsonConfigData = json.dumps(configOpts, indent=4)
         f.write(jsonConfigData)
         f.close()

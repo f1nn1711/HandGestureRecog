@@ -29,16 +29,16 @@ class GestureRecognition():
     def getHandStatus(self, landmarks):
         handStatus = {
             "thumbStatus": self.getThumbStatus(landmarks),
-            "thumbPosition": {},
+            "thumbPosition": landmarks[3],
             "indexFingerStatus": self.getIndexStatus(landmarks),
-            "indexFingerPosition": {},
+            "indexFingerPosition": landmarks[8],
             "middleFingerStatus": self.getMiddleStatus(landmarks),
-            "middleFingerPosition": {},
+            "middleFingerPosition": landmarks[12],
             "ringFingerStatus": self.getRingStatus(landmarks),
-            "ringFingerPosition": {},
+            "ringFingerPosition": landmarks[16],
             "littleFingerStatus": self.getLittleStatus(landmarks),
-            "littleFingerPosition": {},
-            "wristPosition": {}
+            "littleFingerPosition": landmarks[20],
+            "wristPosition": landmarks[0]
         }
 
     def getThumbStatus(self, landmarks, returnValue=False):
