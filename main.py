@@ -1,5 +1,6 @@
 import json
 import os
+import time
 
 with open('config.json', 'r') as f:
     configOpts = json.load(f)
@@ -11,7 +12,7 @@ if configOpts['installDependencies']:
 import cv2
 import mediapipe  # https://google.github.io/mediapipe/solutions/hands.html
 import gestureRecog
-import time
+import triggerKeys
 
 capture = cv2.VideoCapture(0)
 
@@ -83,7 +84,9 @@ while capture.isOpened():
                         gesRecog.setThresholds(configOpts['digitThresholds'])
 
             gesRecog.getHandStatus(formattedLandmarks)
-            print(gesRecog.getAction())
+            if (action := gesRecog.getAction()) != '':
+                print(action)
+                triggerKeys.triggerKeyboardEvent(action)
 
             mediapipeDraw.draw_landmarks(img, landmarks, mediapipe.solutions.hands.HAND_CONNECTIONS)
 

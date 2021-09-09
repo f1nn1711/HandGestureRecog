@@ -147,9 +147,9 @@ class GestureRecognition():
             
             for triggerPoint in action['points']:
                 if (
-                    self.statusHistory[0][triggerPoint] == action['points'][triggerPoint][0] and
-                    self.statusHistory[1][triggerPoint] == action['points'][triggerPoint][1] and
-                    self.statusHistory[2][triggerPoint] == action['points'][triggerPoint][2]
+                    ((self.statusHistory[0][triggerPoint] == action['points'][triggerPoint][0]) or action['points'][triggerPoint][0] == '*') and
+                    ((self.statusHistory[1][triggerPoint] == action['points'][triggerPoint][1]) or action['points'][triggerPoint][1] == '*') and
+                    ((self.statusHistory[2][triggerPoint] == action['points'][triggerPoint][2]) or action['points'][triggerPoint][2] == '*')
                 ):
                     action['lastTriggered'] = currentTimestamp
                     return action['command']

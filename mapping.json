@@ -1,11 +1,32 @@
 [
     {
-        "command": "cmd+n",
+        "command": "Com:cmd+n",
         "maxFrequency": 3,
         "points": {
             "indexFingerStatus": [
                 "straight",
                 "straight",
+                "bent"
+            ]
+        }
+    },
+    {
+        "command": "Type:HelloWorld",
+        "maxFrequency": 3,
+        "points": {
+            "indexFingerStatus": [
+                "*",
+                "straight",
+                "straight"
+            ],
+            "middleFingerStatus": [
+                "*",
+                "straight",
+                "straight"
+            ],
+            "ringFingerStatus": [
+                "*",
+                "bent",
                 "bent"
             ]
         }
