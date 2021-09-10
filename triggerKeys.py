@@ -1,5 +1,6 @@
 import keyboard
 
+
 def triggerKeyboardEvent(action: str) -> None:
     if action.startswith('Com:'):
         action = action.split(':', 1)[1]

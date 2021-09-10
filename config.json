@@ -5,6 +5,7 @@
     "installDependencies": false,
     "showOutput": false,
     "calibrateThresholds": false,
+    "movementThreshold": 0.1,
     "calibrationTime": 8,
     "digitThresholds": {
         "fingerBent": -0.0008943360593384058,

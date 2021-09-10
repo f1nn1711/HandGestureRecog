@@ -18,7 +18,7 @@ capture = cv2.VideoCapture(0)
 
 handsDetection = mediapipe.solutions.hands.Hands()
 mediapipeDraw = mediapipe.solutions.drawing_utils
-gesRecog = gestureRecog.GestureRecognition()
+gesRecog = gestureRecog.GestureRecognition(configOpts)
 
 hasCalibrated = False
 calibrating = False

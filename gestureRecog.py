@@ -1,14 +1,18 @@
 import json
 import time
+import math
 
-class GestureRecognition():
-    def __init__(self):
+
+class GestureRecognition:
+    def __init__(self, configuration):
         self.thresholds = {
             "thumbThreshold": 0,
             "fingerThreshold": 0
         }
 
         self.statusHistory = []
+
+        self.configOpts = configuration
 
         with open('mapping.json', 'r') as f:
             self.mapping = json.load(f)
@@ -111,7 +115,7 @@ class GestureRecognition():
         return self.determineStatusFromCurve(curveValue)
 
     def lineCurve(self, point1: dict, point2: dict, point3: dict) -> float:
-        #https://stackoverflow.com/a/11908158/12671042
+        # https://stackoverflow.com/a/11908158/12671042
         dxc = point2['x'] - point1['x']
         dyc = point2['y'] - point1['y']
 
@@ -122,9 +126,9 @@ class GestureRecognition():
 
         return cross
 
-    def determineStatusFromCurve(self, curveValue: float, isThum = False) -> str:
-        #Lower = straighter
-        if isThum:
+    def determineStatusFromCurve(self, curveValue: float, isThumb=False) -> str:
+        # Lower = straighter
+        if isThumb:
             if curveValue <= self.thresholds['thumbThreshold']:
                 return 'straight'
             else:
@@ -159,6 +163,14 @@ class GestureRecognition():
                     ):
                         doAction = False
                 elif 'Position' in triggerPoint:
+                    distMoved = self.getDist(
+                        [self.statusHistory[0][triggerPoint]['x'], self.statusHistory[0][triggerPoint]['y']],
+                        [self.statusHistory[2][triggerPoint]['x'], self.statusHistory[2][triggerPoint]['y']]
+                    )
+
+                    if distMoved < self.configOpts['movementThreshold']:
+                        continue
+
                     if action['points'][triggerPoint] == 'left':
                         if not (self.statusHistory[0][triggerPoint]['x'] > self.statusHistory[2][triggerPoint]['x']):
                             doAction = False
@@ -179,3 +191,10 @@ class GestureRecognition():
             return action['command']
 
         return ''
+
+    @staticmethod
+    def getDist(point1: list, point2: list, negatives=False):
+        if not negatives:
+            return math.sqrt((abs(point1[0]-point2[0])**2)+(abs(point1[1]-point2[1])**2))
+        else:
+            return math.sqrt(((point1[0]-point2[0])**2)+((point1[1]-point2[1])**2))
