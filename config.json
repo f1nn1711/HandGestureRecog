@@ -3,6 +3,7 @@
     "flip": true,
     "rgb": true,
     "installDependencies": false,
+    "showOutput": false,
     "calibrateThresholds": false,
     "calibrationTime": 8,
     "digitThresholds": {

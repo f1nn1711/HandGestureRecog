@@ -91,9 +91,11 @@ while capture.isOpened():
                 else:
                     quit(0)
 
-            mediapipeDraw.draw_landmarks(img, landmarks, mediapipe.solutions.hands.HAND_CONNECTIONS)
+            if configOpts['showOutput']:
+                mediapipeDraw.draw_landmarks(img, landmarks, mediapipe.solutions.hands.HAND_CONNECTIONS)
 
-    cv2.imshow('window', img)
+    if configOpts['showOutput']:
+        cv2.imshow('window', img)
 
     if cv2.waitKey(1) == ord('q'):
         break

@@ -144,14 +144,38 @@ class GestureRecognition():
         for action in self.mapping:
             if currentTimestamp - action['lastTriggered'] < action['maxFrequency']:
                 continue
+
+            doAction = True
             
             for triggerPoint in action['points']:
-                if (
-                    ((self.statusHistory[0][triggerPoint] == action['points'][triggerPoint][0]) or action['points'][triggerPoint][0] == '*') and
-                    ((self.statusHistory[1][triggerPoint] == action['points'][triggerPoint][1]) or action['points'][triggerPoint][1] == '*') and
-                    ((self.statusHistory[2][triggerPoint] == action['points'][triggerPoint][2]) or action['points'][triggerPoint][2] == '*')
-                ):
-                    action['lastTriggered'] = currentTimestamp
-                    return action['command']
+                if not doAction:
+                    break
+
+                if 'Status' in triggerPoint:
+                    if not (
+                        ((self.statusHistory[0][triggerPoint] == action['points'][triggerPoint][0]) or action['points'][triggerPoint][0] == '*') and
+                        ((self.statusHistory[1][triggerPoint] == action['points'][triggerPoint][1]) or action['points'][triggerPoint][1] == '*') and
+                        ((self.statusHistory[2][triggerPoint] == action['points'][triggerPoint][2]) or action['points'][triggerPoint][2] == '*')
+                    ):
+                        doAction = False
+                elif 'Position' in triggerPoint:
+                    if action['points'][triggerPoint] == 'left':
+                        if not (self.statusHistory[0][triggerPoint]['x'] > self.statusHistory[2][triggerPoint]['x']):
+                            doAction = False
+                    elif action['points'][triggerPoint] == 'right':
+                        if not (self.statusHistory[0][triggerPoint]['x'] < self.statusHistory[2][triggerPoint]['x']):
+                            doAction = False
+                    elif action['points'][triggerPoint] == 'up':
+                        if not (self.statusHistory[0][triggerPoint]['y'] < self.statusHistory[2][triggerPoint]['y']):
+                            doAction = False
+                    elif action['points'][triggerPoint] == 'down':
+                        if not (self.statusHistory[0][triggerPoint]['y'] > self.statusHistory[2][triggerPoint]['y']):
+                            doAction = False
+
+            if not doAction:
+                continue
+
+            action['lastTriggered'] = currentTimestamp
+            return action['command']
 
         return ''

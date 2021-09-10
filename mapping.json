@@ -1,13 +1,14 @@
 [
     {
-        "command": "Com:cmd",
+        "command": "Com:cmd+n",
         "maxFrequency": 3,
         "points": {
             "indexFingerStatus": [
                 "straight",
                 "straight",
                 "bent"
-            ]
+            ],
+            "indexFingerPosition": "left"
         }
     },
     {
@@ -37,27 +38,58 @@
         "points": {
             "indexFingerStatus": [
                 "*",
-                "*",
+                "straight",
                 "straight"
             ],
             "middleFingerStatus": [
                 "*",
-                "*",
+                "straight",
                 "straight"
             ],
             "ringFingerStatus": [
                 "*",
-                "*",
+                "straight",
                 "straight"
             ],
             "littleFingerStatus": [
                 "*",
-                "*",
+                "straight",
                 "straight"
             ],
             "thumbStatus": [
                 "*",
+                "bent",
+                "bent"
+            ]
+        }
+    },
+    {
+        "command": "Com:cmd+p",
+        "maxFrequency": 10,
+        "points": {
+            "indexFingerStatus": [
                 "*",
+                "straight",
+                "straight"
+            ],
+            "middleFingerStatus": [
+                "*",
+                "straight",
+                "straight"
+            ],
+            "ringFingerStatus": [
+                "*",
+                "straight",
+                "straight"
+            ],
+            "littleFingerStatus": [
+                "*",
+                "straight",
+                "straight"
+            ],
+            "thumbStatus": [
+                "*",
+                "straight",
                 "straight"
             ]
         }
