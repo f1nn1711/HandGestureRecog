@@ -16,7 +16,7 @@ import triggerKeys
 
 capture = cv2.VideoCapture(0)
 
-handsDetection = mediapipe.solutions.hands.Hands()
+handsDetection = mediapipe.solutions.hands.Hands(max_num_hands=1)
 mediapipeDraw = mediapipe.solutions.drawing_utils
 gesRecog = gestureRecog.GestureRecognition(configOpts)
 
@@ -35,7 +35,11 @@ def updateConfigFile(configOpts):
         f.close()
 
 
+lastFrame = time.time()
 while capture.isOpened():
+    print(f'FPS: {1/(time.time()-lastFrame)}')
+    lastFrame = time.time()
+
     ret, img = capture.read()
 
     if configOpts['greyscale']:
