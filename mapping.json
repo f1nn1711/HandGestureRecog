@@ -6,7 +6,7 @@
             "indexFingerStatus": [
                 "straight",
                 "straight",
-                "bent"
+                "straight"
             ],
             "indexFingerPosition": "left"
         }
@@ -29,32 +29,6 @@
                 "*",
                 "bent",
                 "bent"
-            ]
-        }
-    },
-    {
-        "command": "quit",
-        "maxFrequency": 10,
-        "points": {
-            "indexFingerStatus": [
-                "*",
-                "straight",
-                "straight"
-            ],
-            "middleFingerStatus": [
-                "*",
-                "straight",
-                "straight"
-            ],
-            "ringFingerStatus": [
-                "*",
-                "straight",
-                "straight"
-            ],
-            "littleFingerStatus": [
-                "*",
-                "straight",
-                "straight"
             ],
             "thumbStatus": [
                 "*",
@@ -64,23 +38,23 @@
         }
     },
     {
-        "command": "Com:cmd+p",
+        "command": "quit",
         "maxFrequency": 10,
         "points": {
             "indexFingerStatus": [
-                "*",
-                "straight",
-                "straight"
+                "bent",
+                "bent",
+                "bent"
             ],
             "middleFingerStatus": [
-                "*",
-                "straight",
-                "straight"
+                "bent",
+                "bent",
+                "bent"
             ],
             "ringFingerStatus": [
-                "*",
-                "straight",
-                "straight"
+                "bent",
+                "bent",
+                "bent"
             ],
             "littleFingerStatus": [
                 "*",
