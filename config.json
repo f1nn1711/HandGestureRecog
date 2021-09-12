@@ -6,11 +6,11 @@
     "showOutput": false,
     "calibrateThresholds": false,
     "movementThreshold": 0.1,
-    "calibrationTime": 8,
+    "calibrationTime": 15,
     "digitThresholds": {
-        "fingerBent": -0.0008943360593384058,
-        "fingerStraight": 0.0006939431531587855,
-        "thumbBent": 0.0009352088134821759,
-        "thumbStraight": 0.0004716817345320989
+        "fingerBent": 0.021207806515119207,
+        "fingerStraight": 0.01293083925124495,
+        "thumbBent": 0.010244390305622034,
+        "thumbStraight": 0.008545628291192441
     }
 }

@@ -37,7 +37,7 @@ def updateConfigFile(configOpts):
 
 lastFrame = time.time()
 while capture.isOpened():
-    print(f'FPS: {1/(time.time()-lastFrame)}')
+    # print(f'FPS: {1/(time.time()-lastFrame)}')
     lastFrame = time.time()
 
     ret, img = capture.read()

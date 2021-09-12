@@ -143,12 +143,12 @@ class GestureRecognition:
     def determineStatusFromCurve(self, curveValue: float, isThumb=False) -> str:
         # Lower = straighter
         if isThumb:
-            if curveValue <= self.thresholds['thumbThreshold']:
+            if abs(curveValue) >= self.thresholds['thumbThreshold']:
                 return 'straight'
             else:
                 return 'bent'
         else:
-            if curveValue <= self.thresholds['fingerThreshold']:
+            if abs(curveValue) >= self.thresholds['fingerThreshold']:
                 return 'straight'
             else:
                 return 'bent'
