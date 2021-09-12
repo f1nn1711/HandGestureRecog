@@ -60,7 +60,7 @@ class GestureRecognition:
             self.statusHistory.pop(0)
 
     def getThumbStatus(self, landmarks, returnValue=False):
-        curveValue = self.lineCurve(
+        curveValue = self.lineCurve3d(
             landmarks[2],
             landmarks[3],
             landmarks[4]
@@ -74,7 +74,7 @@ class GestureRecognition:
             return [curveValue, status]
 
     def getIndexStatus(self, landmarks, returnValue=False):
-        curveValue = self.lineCurve(
+        curveValue = self.lineCurve3d(
             landmarks[5],
             landmarks[6],
             landmarks[8]
@@ -88,7 +88,7 @@ class GestureRecognition:
             return [curveValue, status]
 
     def getMiddleStatus(self, landmarks):
-        curveValue = self.lineCurve(
+        curveValue = self.lineCurve3d(
             landmarks[9],
             landmarks[10],
             landmarks[12]
@@ -97,7 +97,7 @@ class GestureRecognition:
         return self.determineStatusFromCurve(curveValue)
 
     def getRingStatus(self, landmarks):
-        curveValue = self.lineCurve(
+        curveValue = self.lineCurve3d(
             landmarks[13],
             landmarks[14],
             landmarks[16]
@@ -106,7 +106,7 @@ class GestureRecognition:
         return self.determineStatusFromCurve(curveValue)
 
     def getLittleStatus(self, landmarks):
-        curveValue = self.lineCurve(
+        curveValue = self.lineCurve3d(
             landmarks[17],
             landmarks[18],
             landmarks[20]
@@ -125,6 +125,20 @@ class GestureRecognition:
         cross = dxc * dyl - dyc * dxl  # The closer to 0, the more straight it is
 
         return cross
+
+    def lineCurve3d(self, point1: dict, point2: dict, point3: dict) -> float:
+        # http://www.ambrsoft.com/TrigoCalc/Line3D/LineColinear.htm
+        x1, y1, z1 = point1.values()
+        x2, y2, z2 = point2.values()
+        x3, y3, z3 = point3.values()
+
+        n1 = ((y2-y1)*(z3-z1))-((y3-y1)*(z2-z1))
+        n2 = ((x3-x1)*(z2-z1))-((x2-x1)*(z3-z1))
+        n3 = ((x2-x1)*(y3-y1))-((x3-x1)*(y2-y1))
+
+        colinearity = abs(n1)+abs(n2)+abs(n3)  # The closer to 0, the more straight it is
+
+        return colinearity
 
     def determineStatusFromCurve(self, curveValue: float, isThumb=False) -> str:
         # Lower = straighter
